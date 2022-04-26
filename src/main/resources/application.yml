@@ -1,0 +1,21 @@
+spring:
+  datasource:
+    username: pgiercza
+    password:
+    url: jdbc:sqlserver://morfeusz.wszib.edu.pl:1433;databaseName=pgiercza
+  sql:
+    init:
+      mode: always
+  flyway:
+    user: wreczyck
+    password: <password>
+    url: jdbc:sqlserver://morfeusz.wszib.edu.pl:1433;databaseName=wreczyck
+    locations: classpath:db/migrations
+    schemas: [ wreczyck ]
+    enabled: false
+  jpa:
+    general-ddl: true
+    show-sql: true
+    hibernate:
+      format_sql: true
+      ddl-auto: update

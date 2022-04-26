@@ -24,7 +24,6 @@ public class ProfileController {
 
   @Autowired
   private ProfileService profileService;
-  private Plec plec;
 
   @GetMapping
   public String defaultView() {
