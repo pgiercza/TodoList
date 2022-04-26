@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import pl.edu.wszib.http2.service.ProfileService;
 import pl.edu.wszib.http2.service.exception.NotFoundException;
+import pl.edu.wszib.http2.service.model.Plec;
 import pl.edu.wszib.http2.service.model.Profile;
 
 import javax.validation.Valid;
@@ -23,6 +24,7 @@ public class ProfileController {
 
   @Autowired
   private ProfileService profileService;
+  private Plec plec;
 
   @GetMapping
   public String defaultView() {
@@ -36,20 +38,23 @@ public class ProfileController {
   }
 
   @GetMapping("/list")
-  public String listProfilesView(Model model) throws ParseException {
-    model.addAttribute("profiles", profileService.list());
+  public String listProfilesView(@RequestParam(required = false)Plec plec, Model model) throws ParseException {
+    model.addAttribute("profiles", profileService.list(plec));
+    model.addAttribute("plcie",Plec.values());
     return "list-profiles";
   }
 
   @GetMapping("/create")
   public String createProfileView(Model model) {
     model.addAttribute("newProfile", new Profile());
+    model.addAttribute("plcie", Plec.values());
     return "create-profile";
   }
 
   @GetMapping("/update")
   public String updateProfileView(@RequestParam Integer id, Model model) {
     model.addAttribute("updateProfile", profileService.get(id));
+    model.addAttribute("plcie", Plec.values());
     return "update-profile";
   }
 
@@ -63,6 +68,7 @@ public class ProfileController {
   public String createProfileAction(@Valid Profile newProfile, BindingResult bindingResult, @RequestParam("file") MultipartFile multipartFile, Model model) throws IOException {
     if(multipartFile.getBytes().length == 0) {
       bindingResult.addError(new FieldError("newProfile", "zdjecie", "Zdjecie jest wymagane"));
+      model.addAttribute("plcie", Plec.values());
     }
 
     if(bindingResult.hasErrors()) {
@@ -81,6 +87,7 @@ public class ProfileController {
     if(bindingResult.hasErrors()) {
       model.addAttribute(updateProfile);
       model.addAttribute("org.springframework.validation.BindingResult.updateProfile", bindingResult);
+      model.addAttribute("plcie", Plec.values());
       return "update-profile";
     }
 

@@ -3,23 +3,47 @@ package pl.edu.wszib.http2.service.model;
 import org.springframework.format.annotation.DateTimeFormat;
 import pl.edu.wszib.http2.service.common.CrudResource;
 
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.text.ParseException;
 
+@Entity
+@Table
 public class Profile implements CrudResource<Integer> {
-
+@Id
+@GeneratedValue
   private Integer id;
+
+  @Column(nullable = false)
   @Size(min = 3, max = 50)
   @Pattern(regexp = "[a-zA-Z]+")
   private String imie;
+
+  @Column(nullable = false)
   @Size(min = 3, max = 50)
   @Pattern(regexp = "[a-zA-Z]+")
   private String nazwisko;
+
+  @Column(nullable = false)
   @DateTimeFormat(pattern = "yyyy-MD-dd")
   @NotBlank
   private String dataUrodzenia;
+
+  @Enumerated(EnumType.STRING)
+  @Column(nullable = false)
+  private Plec plec;
+
+  public Plec getPlec() {
+    return plec;
+  }
+
+  public void setPlec(Plec plec) {
+    this.plec = plec;
+  }
+
+  @Lob
   private byte[] zdjecie;
 
   @Override

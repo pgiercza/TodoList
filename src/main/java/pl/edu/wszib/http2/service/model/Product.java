@@ -2,12 +2,15 @@ package pl.edu.wszib.http2.service.model;
 
 import pl.edu.wszib.http2.service.common.CrudResource;
 
-public class Produkt implements CrudResource<Integer> {
+public class Product implements CrudResource<Integer> {
 
   private Integer id;
   private String nazwa;
   private Integer ilosc;
   private Float cena;
+
+
+
 
   @Override
   public Integer getId() {

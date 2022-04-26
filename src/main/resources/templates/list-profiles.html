@@ -17,9 +17,13 @@
             <td>Imie</td>
             <td>Nazwisko</td>
             <td>Akcje</td>
+            <a class="btn btn-primary" th:each="p:${plcie}"
+               th:href="@{/profile/list(plec=${p})}" th:text="'Pokaz '+ ${p}"></a>
+
         </tr>
         </thead>
         <tbody>
+
         <tr th:each="profile : ${profiles}">
             <td th:text="${profile.id}"></td>
             <td th:text="${profile.imie}"></td>
